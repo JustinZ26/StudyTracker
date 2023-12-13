@@ -1,0 +1,67 @@
+# studytracker.kv
+
+#: import Popup kivy.uix.popup.Popup
+#: import BoxLayout kivy.uix.boxlayout.BoxLayout
+#: import Button kivy.uix.button.Button
+#: import TextInput kivy.uix.textinput.TextInput
+#: import Label kivy.uix.label.Label
+#: import Spinner kivy.uix.spinner.Spinner
+
+NavigationBox:
+    id: navigation_box
+    screen_manager: root.manager
+
+<StartPage>:
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Press any button to continue'
+            on_press: root.go_to_home(self)
+
+<HomePage>:
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Home Page'
+        NavigationBox:
+            screen_manager: root.manager
+
+<CalendarPage>:
+    events: {}
+    date_selection: None
+
+    BoxLayout:
+        orientation: 'vertical'
+        # Top Section with Month/Year Label
+        BoxLayout:
+            size_hint: (1, 0.1)
+            Label:
+                text: 'Month/Year'
+        # Middle Section with Date Buttons
+        GridLayout:
+            cols: 7
+            spacing: 5
+            size_hint: (1, 0.5)
+            Button:
+                text: str(day)
+                on_press: root.show_events_for_date(self) for day in range(1, 32)
+        # Space for Events
+        BoxLayout:
+            size_hint: (1, 0.5)
+            Label:
+                text: 'Events for selected date'
+            # Button to Add Event
+            Button:
+                text: 'Add Event'
+                on_press: app.root.ids.calendar_page.show_add_event_popup(self)
+
+        NavigationBox:
+            screen_manager: root.manager
+
+<ProfilePage>:
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text: 'Profile Page'
+        NavigationBox:
+            screen_manager: root.manager
